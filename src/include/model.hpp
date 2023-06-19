@@ -7,3 +7,20 @@
  * 
  * @copyright Copyright (c) 2023
  */
+
+namespace {
+    struct Position {
+        int x;
+        int y;
+
+        friend bool operator==(Position& a, Position& b) {
+            return a.x == b.x && a.y == b.y;
+        }
+    };
+}
+
+class AStar {
+    private:
+
+    public:
+};
