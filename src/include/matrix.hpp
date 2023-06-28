@@ -24,6 +24,7 @@
 template<int width,int height>
 struct Matrix {
     private:
+        size_t w = width,h = height;
         std::array<std::array<int,height>,width> data;
     public:
         int& operator()(int x, int y) {
@@ -31,5 +32,12 @@ struct Matrix {
         }
         bool notWall(int x, int y) {
             return (*this)(x,y) != -1;
+        }
+        size_t getWidth() {
+            return w;
+        }
+
+        size_t getHeight() {
+            return h;
         }
 };
