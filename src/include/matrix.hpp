@@ -29,4 +29,7 @@ struct Matrix {
         int& operator()(int x, int y) {
             return data.at(x).at(y);
         }
+        bool notWall(int x, int y) {
+            return (*this)(x,y) != -1;
+        }
 };
