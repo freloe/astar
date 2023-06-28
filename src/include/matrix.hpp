@@ -8,8 +8,19 @@
  * @copyright Copyright (c) 2023
  * 
  */
+#pragma once
 #include <array>
 
+/**
+ * @brief For consistency: \n
+ *          Walls == -1 \n
+ *          Empty ==  0 \n
+ *          Start ==  1 \n
+ *          Goal  ==  2 \n
+ * 
+ * @tparam width 
+ * @tparam height 
+ */
 template<int width,int height>
 struct Matrix {
     private:
