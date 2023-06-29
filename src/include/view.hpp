@@ -9,6 +9,7 @@
  * @copyright Copyright (c) 2023
  * 
  */
+#pragma once
 #include <SFML/Graphics.hpp>
 
 class View {
@@ -53,7 +54,7 @@ class View {
         }
 
         template<typename Matrix>
-        void drawMatrix(Matrix data) {
+        void drawMatrix(Matrix& data) {
             int width = data.getWidth();
             int height = data.getHeight();
 
