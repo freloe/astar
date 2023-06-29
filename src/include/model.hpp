@@ -43,13 +43,10 @@ namespace {
 template<float (&heuristic)(Position a, Position b)>
 class AStar {
     private:
-        std::map<Position,float> gScore;
-        std::map<Position,float> fScore;
-        std::map<Position,Position> cameFrom;
-        std::set<Position> openSet;
 
-        std::vector<Position> reversePath(Position& start, Position cur) {
+        std::vector<Position> reversePath(std::map<Position,Position>& cameFrom, Position& start, Position cur) {
             std::vector<Position> path;
+            cur = cameFrom.at(cur); //Dont include goal pos in path
             while(cur != start) {
                 path.insert(path.begin(),cur);
                 cur = cameFrom.at(cur);
@@ -59,7 +56,12 @@ class AStar {
 
     public:
         template<typename Matrix>
-        std::vector<Position> calculatePath(Matrix data) {
+        std::vector<Position> calculatePath(Matrix& data) {
+            std::map<Position,float> gScore;
+            std::map<Position,float> fScore;
+            std::map<Position,Position> cameFrom;
+            std::set<Position> openSet;
+
             Position start{data.xStart,data.yStart};
             Position goal{data.xGoal,data.yGoal};
             
@@ -78,7 +80,7 @@ class AStar {
                 fScore.erase(cur);
                 
                 if(cur == goal)
-                    return reversePath(start,cur);
+                    return reversePath(cameFrom, start,cur);
 
                 openSet.erase(cur);
 
