@@ -60,11 +60,21 @@ class View {
             int boxSizeX = w.getSize().x/width;
             int boxSizeY = w.getSize().y/height;
 
-            for(int i = 0; i < w.getSize().x; i += boxSizeX) 
-                for(int j = 0; j < w.getSize().y; j += boxSizeY)
+            float offsetX = (w.getSize().x - (boxSizeX * width))/2.0;
+            float offsetY = (w.getSize().y - (boxSizeY * height))/2.0;
+            
+            int countX = 0, countY = 0;
+
+            for(float i = offsetX; i < w.getSize().x-offsetX; i += boxSizeX) {
+                for(float j = offsetY; j < w.getSize().y-offsetY; j += boxSizeY) {
                     for(int bx = 1; bx < boxSizeX-1; ++bx) 
                         for(int by = 1; by < boxSizeY-1; ++by)
-                            img.setPixel(i+bx,j+by,getColorAt(data,i/boxSizeX,j/boxSizeY));
+                            img.setPixel(i+bx,j+by,getColorAt(data,countX,countY));
+                    ++countY;    
+                }
+                ++countX;
+                countY = 0;
+            }
             
         }
 
