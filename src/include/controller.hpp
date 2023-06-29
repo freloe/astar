@@ -48,7 +48,6 @@ class Controller {
                     w.close();
                 if (event.type == sf::Event::KeyPressed) 
                     if(event.key.code == sf::Keyboard::Space) {
-                        std::cout << "Calculating path" << std::endl;
                         data.clearPath();
                         auto path = model.calculatePath(data);
                         if(path.size() > 0) {
@@ -66,7 +65,6 @@ class Controller {
                 sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
                 if(!(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)) {
                     pos = getMatrixPos(pos);
-                    std::cout << pos.x << " " << pos.y <<std::endl;
                     data.setWall(pos.x,pos.y);
                 }
             }
