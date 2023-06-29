@@ -24,26 +24,31 @@ class Controller {
 
         }
 
+        sf::Vector2i getMatrixPos(sf::Vector2i pos) {
+            if(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)
+                return;
+
+            int width = data.getWidth();
+            int height = data.getHeight();
+
+            int boxSizeX = view.getWidth() /width;
+            int boxSizeY = view.getHeight()/height;
+
+            float offsetX = (view.getWidth()  - (boxSizeX * width))/2.0;
+            float offsetY = (view.getHeight() - (boxSizeY * height))/2.0;
+
+            int x = (pos.x-offsetX) / boxSizeX;
+            int y = (pos.y-offsetY) / boxSizeY;
+        }
+
         void pollInput() {
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
                 sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
-                if(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)
-                    return;
-
-                int width = data.getWidth();
-                int height = data.getHeight();
-
-                int boxSizeX = view.getWidth() /width;
-                int boxSizeY = view.getHeight()/height;
-
-                float offsetX = (view.getWidth()  - (boxSizeX * width))/2.0;
-                float offsetY = (view.getHeight() - (boxSizeY * height))/2.0;
-
-                int x = (pos.x-offsetX) / boxSizeX;
-                int y = (pos.y-offsetY) / boxSizeY;
-
-                data.setWall(x,y);
+                pos = getMatrixPos(pos)
+                data.setWall(pos.x,pos.y);
             }
+
+
                 
         }
 };
