@@ -63,6 +63,9 @@ class AStar {
             Position start{data.xStart,data.yStart};
             Position goal{data.xGoal,data.yGoal};
             
+            if(start.x == -1 || goal.x == -1)
+                return std::vector<Position>{};
+
             openSet.emplace(start);
             gScore.emplace(std::make_pair(start,0));
             fScore.emplace(std::make_pair(start,heuristic(start,goal)));
