@@ -35,8 +35,8 @@ class AStar {
             std::map<Position,Position> cameFrom;
             std::set<Position> openSet;
 
-            Position start{data.xStart,data.yStart};
-            Position goal{data.xGoal,data.yGoal};
+            Position start = data.getStart();
+            Position goal = data.getGoal();
             
             if(start.x == -1 || goal.x == -1)
                 return std::vector<Position>{};

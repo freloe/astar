@@ -51,8 +51,16 @@ struct Matrix {
     private:
         size_t w = width,h = height;
         std::array<std::array<int,height>,width> data{0};
+        Position start{-1,-1}, goal{-1,-1};
     public:
-        int xStart = -1, yStart = -1, xGoal = -1, yGoal = -1;
+
+        Position getStart(){
+            return start;
+        }
+
+        Position getGoal() {
+            return goal;
+        }
         
         int operator()(int x, int y) {
             return data.at(x).at(y);
@@ -60,6 +68,7 @@ struct Matrix {
         bool isWall(int x, int y) {
             return (*this)(x,y) == -1;
         }
+        
         size_t getWidth() {
             return w;
         }
