@@ -32,8 +32,8 @@ struct Matrix {
         int operator()(int x, int y) {
             return data.at(x).at(y);
         }
-        bool notWall(int x, int y) {
-            return (*this)(x,y) != -1;
+        bool isWall(int x, int y) {
+            return (*this)(x,y) == -1;
         }
         size_t getWidth() {
             return w;
@@ -44,6 +44,8 @@ struct Matrix {
         }
 
         void setStart(int x, int y) {
+            if(x < 0 || x >= width || y < 0 || y >= height)
+                return;
             data.at(xStart).at(yStart) = 0;
             data.at(x).at(y) = 1;
             xStart = x;
@@ -51,6 +53,8 @@ struct Matrix {
         }
 
         void setGoal(int x, int y) {
+            if(x < 0 || x >= width || y < 0 || y >= height)
+                return;
             data.at(xGoal).at(yGoal) = 0;
             data.at(x).at(y) = 2;
             xGoal = x;
@@ -58,10 +62,14 @@ struct Matrix {
         }
 
         void setWall(int x, int y) {
+            if(x < 0 || x >= width || y < 0 || y >= height)
+                return;
             data.at(x).at(y) = -1;
         }
 
         void setEmpty(int x, int y) {
+            if(x < 0 || x >= width || y < 0 || y >= height)
+                return;
             data.at(x).at(y) = 0;
         }
 };
