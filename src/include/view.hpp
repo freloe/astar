@@ -29,6 +29,8 @@ class View {
                 return sf::Color::Magenta;
             case 2:
                 return sf::Color::Green;
+            case 3:
+                return sf::Color::Blue;
             default:
                 return sf::Color::White;
             }
@@ -55,14 +57,6 @@ class View {
 
         bool isOpen() {
             return w.isOpen();
-        }
-
-        void pollEvents() {
-            sf::Event event;
-            while (w.pollEvent(event)) {
-                if (event.type == sf::Event::Closed)
-                    w.close();
-            }
         }
 
         template<typename Matrix>
