@@ -85,6 +85,25 @@ class View {
             
         }
 
+        template<typename Matrix>
+        void updateMatrix(Matrix& data, int x, int y) {
+            int width = data.getWidth();
+            int height = data.getHeight();
+
+            int boxSizeX = w.getSize().x/width;
+            int boxSizeY = w.getSize().y/height;
+
+            float offsetX = (w.getSize().x - (boxSizeX * width))/2.0;
+            float offsetY = (w.getSize().y - (boxSizeY * height))/2.0;
+            
+            int countX = 0, countY = 0;
+
+            for(int bx = 1; bx < boxSizeX-1; ++bx) 
+                for(int by = 1; by < boxSizeY-1; ++by)
+                    img.setPixel(offsetX+boxSizeX*x+bx,offsetY+boxSizeY*y+by,getColorAt(data,x,y));
+        }
+
+
         void draw() {
             texture.loadFromImage(img);
             w.draw(sprite);

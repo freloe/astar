@@ -11,6 +11,7 @@
 #pragma once
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <vector>
 
 template<typename Model, typename View, typename Matrix>
 class Controller {
@@ -18,13 +19,14 @@ class Controller {
         Model& model;
         View& view;
         Matrix& data;
+        std::vector<Position> changes;
     public:
 
         Controller(Model& model, View& view, Matrix& data) : model{model}, view{view}, data{data} {
 
         }
 
-        sf::Vector2i getMatrixPos(sf::Vector2i pos) {
+        void getMatrixPos(sf::Vector2i& pos) {
             int width = data.getWidth();
             int height = data.getHeight();
 
@@ -34,10 +36,8 @@ class Controller {
             float offsetX = (view.getWidth()  - (boxSizeX * width))/2.0;
             float offsetY = (view.getHeight() - (boxSizeY * height))/2.0;
 
-            int x = (pos.x-offsetX) / boxSizeX;
-            int y = (pos.y-offsetY) / boxSizeY;
-
-            return sf::Vector2i{x,y};
+            pos.x = (pos.x-offsetX) / boxSizeX;            
+            pos.y = (pos.y-offsetY) / boxSizeY;
         }
 
         void pollEvents() {
@@ -51,8 +51,9 @@ class Controller {
                         data.clearPath();
                         auto path = model.calculatePath(data);
                         if(path.size() > 0) {
-                            for(auto pos : path) {
+                            for(Position pos : path) {
                                 data.setPath(pos.x,pos.y);
+                                changes.emplace_back(Position{pos.x,pos.y});
                             }
                         }
                     }
@@ -61,38 +62,37 @@ class Controller {
         }
 
         void pollInput() {
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-                sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
-                if(!(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)) {
-                    pos = getMatrixPos(pos);
-                    data.setWall(pos.x,pos.y);
+            sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
+            if(!(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)) {
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+                        getMatrixPos(pos);
+                        data.setWall(pos.x,pos.y);
+                        changes.emplace_back(Position{pos.x,pos.y});
                 }
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
-                sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
-                if(!(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)) {
-                    pos = getMatrixPos(pos);
-                    data.setEmpty(pos.x,pos.y);
+                else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
+                        getMatrixPos(pos);
+                        data.setEmpty(pos.x,pos.y);
+                        changes.emplace_back(Position{pos.x,pos.y});
                 }
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G)) {
-                sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
-                if(!(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)) {
-                    pos = getMatrixPos(pos);
-                    data.setGoal(pos.x,pos.y);
+                else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G)){
+                        getMatrixPos(pos);
+                        data.setGoal(pos.x,pos.y);
+                        changes.emplace_back(Position{pos.x,pos.y});
                 }
+                else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+                        getMatrixPos(pos);
+                        data.setStart(pos.x,pos.y);
+                        changes.emplace_back(Position{pos.x,pos.y});
+                    }
+                else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C)) {
+                        data.clearPath();
+                        changes.emplace_back(Position{-1,-1});
+                    }
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-                sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
-                if(!(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)) {
-                    pos = getMatrixPos(pos);
-                    data.setStart(pos.x,pos.y);
-                }
-            }
+   
+        }
 
-
-
-
-                
+        std::vector<Position>& getChanges() {
+            return changes;
         }
 };

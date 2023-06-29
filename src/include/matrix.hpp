@@ -11,6 +11,30 @@
 #pragma once
 #include <array>
 
+struct Position {
+        int x;
+        int y;
+
+        friend bool operator==(Position& a, Position& b) {
+            return a.x == b.x && a.y == b.y;
+        }
+        friend bool operator!=(Position& a, Position& b) {
+            return !(a == b);
+        }
+        friend bool operator<(const Position a,const Position b) {
+            return (a.y < b.y) || (a.y == b.y && a.x < b.x);
+        }
+
+        std::set<Position> getNeighbours(size_t width,size_t height) {
+            std::set<Position> p;
+            for(int i = -1; i < 2; ++i)
+                for(int j = -1; j < 2; ++j)
+                    if(x+i >= 0 && x+i < width && y+j >= 0 && y+j < height && !(i == 0 && j == 0)) 
+                        p.emplace(Position{x+i,y+j});
+            return p;
+        }
+    };
+
 /**
  * @brief For consistency: \n
  *          Walls == -1 \n
