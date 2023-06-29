@@ -27,7 +27,7 @@ struct Matrix {
         size_t w = width,h = height;
         std::array<std::array<int,height>,width> data{0};
     public:
-        int xStart = 0, yStart = 0, xGoal = 1, yGoal = 0;
+        int xStart = -1, yStart = -1, xGoal = -1, yGoal = -1;
         
         int operator()(int x, int y) {
             return data.at(x).at(y);
@@ -46,7 +46,8 @@ struct Matrix {
         void setStart(int x, int y) {
             if(x < 0 || x >= width || y < 0 || y >= height)
                 return;
-            data.at(xStart).at(yStart) = 0;
+            if(xStart != -1)
+                data.at(xStart).at(yStart) = 0;
             data.at(x).at(y) = 1;
             xStart = x;
             yStart = y;
@@ -55,7 +56,8 @@ struct Matrix {
         void setGoal(int x, int y) {
             if(x < 0 || x >= width || y < 0 || y >= height)
                 return;
-            data.at(xGoal).at(yGoal) = 0;
+            if(xGoal != -1)
+                data.at(xGoal).at(yGoal) = 0;
             data.at(x).at(y) = 2;
             xGoal = x;
             yGoal = y;
