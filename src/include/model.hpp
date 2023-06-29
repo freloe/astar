@@ -80,7 +80,9 @@ class AStar {
                 openSet.erase(cur);
 
                 for(Position p : cur.getNeighbours(data.getWidth(),data.getHeight())) {
-                    float tent_gScore = gScore.at(cur) + data.notWall(p.x,p.y) * heuristic(cur,p);
+                    if(data.isWall(p.x,p.y))
+                        continue;
+                    float tent_gScore = gScore.at(cur) +  heuristic(cur,p);
                     gScore.emplace(std::make_pair(p,__FLT_MAX__));
                     if(tent_gScore < gScore.at(p)) {
                         cameFrom.emplace(std::make_pair(p,cur));
