@@ -40,6 +40,27 @@ class Controller {
             return sf::Vector2i{x,y};
         }
 
+        void pollEvents() {
+            auto& w = view.getWindow();
+            sf::Event event;
+            while (w.pollEvent(event)) {
+                if (event.type == sf::Event::Closed)
+                    w.close();
+                if (event.type == sf::Event::KeyPressed) 
+                    if(event.key.code == sf::Keyboard::Space) {
+                        std::cout << "Calculating path" << std::endl;
+                        data.clearPath();
+                        auto path = model.calculatePath(data);
+                        if(path.size() > 0) {
+                            for(auto pos : path) {
+                                data.setPath(pos.x,pos.y);
+                            }
+                        }
+                    }
+
+            }
+        }
+
         void pollInput() {
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
                 sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
