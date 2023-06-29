@@ -17,6 +17,7 @@
  *          Empty ==  0 \n
  *          Start ==  1 \n
  *          Goal  ==  2 \n
+ *          Path  ==  3 \n
  * 
  * @tparam width 
  * @tparam height 
@@ -41,6 +42,13 @@ struct Matrix {
 
         size_t getHeight() {
             return h;
+        }
+
+        void clearPath() {
+            for(auto& a : data)
+                for(int& i : a) 
+                    if(i == 3)
+                        i = 0;
         }
 
         void setStart(int x, int y) {
@@ -73,5 +81,11 @@ struct Matrix {
             if(x < 0 || x >= width || y < 0 || y >= height)
                 return;
             data.at(x).at(y) = 0;
+        }
+
+        void setPath(int x, int y) {
+            if(x < 0 || x >= width || y < 0 || y >= height)
+                return;
+            data.at(x).at(y) = 3;
         }
 };
