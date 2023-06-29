@@ -68,7 +68,7 @@ struct Matrix {
         bool isWall(int x, int y) {
             return (*this)(x,y) == -1;
         }
-        
+
         size_t getWidth() {
             return w;
         }
@@ -87,21 +87,21 @@ struct Matrix {
         void setStart(int x, int y) {
             if(x < 0 || x >= width || y < 0 || y >= height)
                 return;
-            if(xStart != -1)
-                data.at(xStart).at(yStart) = 0;
+            if(start.x != -1)
+                data.at(start.x).at(start.y) = 0;
             data.at(x).at(y) = 1;
-            xStart = x;
-            yStart = y;
+            start.x = x;
+            start.y = y;
         }
 
         void setGoal(int x, int y) {
             if(x < 0 || x >= width || y < 0 || y >= height)
                 return;
-            if(xGoal != -1)
-                data.at(xGoal).at(yGoal) = 0;
+            if(goal.x != -1)
+                data.at(goal.x).at(goal.y) = 0;
             data.at(x).at(y) = 2;
-            xGoal = x;
-            yGoal = y;
+            goal.x = x;
+            goal.y = y;
         }
 
         void setWall(int x, int y) {
