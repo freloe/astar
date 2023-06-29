@@ -25,9 +25,6 @@ class Controller {
         }
 
         sf::Vector2i getMatrixPos(sf::Vector2i pos) {
-            if(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)
-                return;
-
             int width = data.getWidth();
             int height = data.getHeight();
 
@@ -39,14 +36,42 @@ class Controller {
 
             int x = (pos.x-offsetX) / boxSizeX;
             int y = (pos.y-offsetY) / boxSizeY;
+
+            return sf::Vector2i{x,y};
         }
 
         void pollInput() {
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
                 sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
-                pos = getMatrixPos(pos)
-                data.setWall(pos.x,pos.y);
+                if(!(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)) {
+                    pos = getMatrixPos(pos);
+                    std::cout << pos.x << " " << pos.y <<std::endl;
+                    data.setWall(pos.x,pos.y);
+                }
             }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
+                sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
+                if(!(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)) {
+                    pos = getMatrixPos(pos);
+                    data.setEmpty(pos.x,pos.y);
+                }
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G)) {
+                sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
+                if(!(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)) {
+                    pos = getMatrixPos(pos);
+                    data.setGoal(pos.x,pos.y);
+                }
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+                sf::Vector2i pos = sf::Mouse::getPosition(view.getWindow());
+                if(!(pos.x >= view.getWidth() || pos.y >= view.getHeight() || pos.x < 0 || pos.y < 0)) {
+                    pos = getMatrixPos(pos);
+                    data.setStart(pos.x,pos.y);
+                }
+            }
+
+
 
 
                 
