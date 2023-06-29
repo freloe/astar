@@ -25,7 +25,7 @@ template<int width,int height>
 struct Matrix {
     private:
         size_t w = width,h = height;
-        std::array<std::array<int,height>,width> data;
+        std::array<std::array<int,height>,width> data{0};
     public:
         int xStart = 0, yStart = 0, xGoal = 1, yGoal = 0;
         
