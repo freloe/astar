@@ -76,11 +76,13 @@ class Controller {
                 }
                 else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G)){
                         getMatrixPos(pos);
+                        changes.emplace_back(Position{data.getGoal().x,data.getGoal().y});
                         data.setGoal(pos.x,pos.y);
                         changes.emplace_back(Position{pos.x,pos.y});
                 }
                 else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
                         getMatrixPos(pos);
+                        changes.emplace_back(Position{data.getStart().x,data.getStart().y});
                         data.setStart(pos.x,pos.y);
                         changes.emplace_back(Position{pos.x,pos.y});
                     }
