@@ -10,6 +10,7 @@
  */
 #pragma once
 #include <array>
+#include <vector>
 
 struct Position {
         int x;
@@ -33,6 +34,20 @@ struct Position {
                         p.emplace(Position{x+i,y+j});
             return p;
         }
+
+        std::set<Position> getDirectNeighbours(size_t width,size_t height) {
+            std::set<Position> p;
+            if(x+1 < width)
+                p.emplace(Position{x+1,y});
+            if(x-1 >= 0)
+                p.emplace(Position{x-1,y});
+            if(y+1 < height)
+                p.emplace(Position{x,y+1});
+            if(y-1 >= 0)
+                p.emplace(Position{x,y-1});
+            return p;
+        }
+
     };
 
 /**

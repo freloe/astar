@@ -87,6 +87,8 @@ class View {
 
         template<typename Matrix>
         void updateMatrix(Matrix& data, int x, int y) {
+            if(x < 0 || x >= w.getSize().x || y < 0 || y >= w.getSize().y)
+                return;
             int width = data.getWidth();
             int height = data.getHeight();
 

@@ -20,6 +20,7 @@ class Controller {
         View& view;
         Matrix& data;
         std::vector<Position> changes;
+        std::vector<Position> lastPath;
     public:
 
         Controller(Model& model, View& view, Matrix& data) : model{model}, view{view}, data{data} {
@@ -48,12 +49,15 @@ class Controller {
                     w.close();
                 if (event.type == sf::Event::KeyPressed) 
                     if(event.key.code == sf::Keyboard::Space) {
+                        changes.insert(changes.end(),lastPath.begin(),lastPath.end());
+                        lastPath.clear();
                         data.clearPath();
                         auto path = model.calculatePath(data);
                         if(path.size() > 0) {
                             for(Position pos : path) {
                                 data.setPath(pos.x,pos.y);
                                 changes.emplace_back(Position{pos.x,pos.y});
+                                lastPath.emplace_back(Position{pos.x,pos.y});
                             }
                         }
                     }
@@ -88,7 +92,7 @@ class Controller {
                     }
                 else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C)) {
                         data.clearPath();
-                        changes.emplace_back(Position{-1,-1});
+                        changes.insert(changes.end(),lastPath.begin(),lastPath.end());
                     }
             }
    

@@ -23,10 +23,7 @@ int main(){
         c.pollInput();
         c.pollEvents();
         for(auto p : c.getChanges()) {
-            if(p.x == -1 && p.y == -1)
-                v.drawMatrix<decltype(m)>(m);
-            else
-                v.updateMatrix(m,p.x,p.y);
+            v.updateMatrix(m,p.x,p.y);
         }
         c.getChanges().clear();
         v.draw();

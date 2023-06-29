@@ -50,6 +50,7 @@ class AStar {
                 Position cur;
                 std::for_each(fScore.begin(),fScore.end(),
                     [&](auto p){ if(p.second < smallest) { smallest = p.second; cur = p.first; } });
+                
                 fScore.erase(cur);
                 
                 if(cur == goal)
@@ -57,7 +58,7 @@ class AStar {
 
                 openSet.erase(cur);
 
-                for(Position p : cur.getNeighbours(data.getWidth(),data.getHeight())) {
+                for(Position p : cur.getDirectNeighbours(data.getWidth(),data.getHeight())) {
                     if(data.isWall(p.x,p.y))
                         continue;
                     float tent_gScore = gScore.at(cur) +  heuristic(cur,p);
