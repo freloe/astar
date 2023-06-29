@@ -41,6 +41,18 @@ class View {
             sprite.setTexture(texture);
         }
 
+        size_t getWidth() {
+            return w.getSize().x;
+        }
+
+        size_t getHeight() {
+            return w.getSize().y;
+        }
+
+        sf::RenderWindow& getWindow() {
+            return w;
+        }
+
         bool isOpen() {
             return w.isOpen();
         }
