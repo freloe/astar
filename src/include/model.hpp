@@ -13,7 +13,7 @@
 #include <queue>
 #include "matrix.hpp"
 
-template<float (&heuristic)(Position a, Position b)>
+template<float (&heuristic)(Position& a, Position& b)>
 class AStar {
     private:
 

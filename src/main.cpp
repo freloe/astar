@@ -6,7 +6,7 @@
 #include "include/matrix.hpp"
 #include "include/controller.hpp"
 
-float heuristic(Position a, Position b){
+float heuristic(Position& a, Position& b){
     float x = a.x - b.x;
     float y = a.y - b.y;
     return sqrt(x*x+y*y);
